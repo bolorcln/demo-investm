@@ -1,0 +1,80 @@
+<app-filter></app-filter>
+
+<div class="d-flex justify-end">
+  <button>Add</button>
+</div>
+
+<table mat-table [dataSource]="dataSource">
+  <ng-container matColumnDef="org_id">
+    <th mat-header-cell *matHeaderCellDef>Байгууллагын дугаар</th>
+    <td mat-cell *matCellDef="let security">
+      {{security.organizationId}}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="org_name">
+    <th mat-header-cell *matHeaderCellDef>Байгууллагын нэр</th>
+    <td mat-cell *matCellDef="let security">
+      {{security.organizationName}}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="security_name">
+    <th mat-header-cell *matHeaderCellDef>Үнэт цаасны нэр</th>
+    <td mat-cell *matCellDef="let security">
+      {{security.issuerTypeName}}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="security_type">
+    <th mat-header-cell *matHeaderCellDef>Үнэт цаас гаргагчийн хэлбэр</th>
+    <td mat-cell *matCellDef="let security">
+      {{security.securityType}}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="account_no">
+    <th mat-header-cell *matHeaderCellDef>Дансны дугаар</th>
+    <td mat-cell *matCellDef="let security">
+      {{security.accountNo}}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="investment_type">
+    <th mat-header-cell *matHeaderCellDef>Хөрөнгө оруулалтын төлөв</th>
+    <td mat-cell *matCellDef="let security">
+      {{security.investmentType}}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="unit_account_value">
+    <th mat-header-cell *matHeaderCellDef>Нэгжийн дансны үнэ</th>
+    <td mat-cell *matCellDef="let security">
+      {{security.unitAccountValue}}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="start_date">
+    <th mat-header-cell *matHeaderCellDef>Эхлэх хугацаа</th>
+    <td mat-cell *matCellDef="let security">
+      {{security.startDate | date:'dd/MM/yyyy'}}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="end_date">
+    <th mat-header-cell *matHeaderCellDef>Дуусах хугацаа</th>
+    <td mat-cell *matCellDef="let security">
+      {{security.endDate | date:'dd/MM/yyyy'}}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef>Үйлдэл</th>
+    <td mat-cell *matCellDef="let security">
+      {{security.organizationId}}
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="columns"></tr>
+  <tr mat-row *matRowDef="let row; columns: columns"></tr>
+</table>

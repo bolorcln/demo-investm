@@ -1,0 +1,23 @@
+<form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+  <h3>Ерөнхий мэдээлэл</h3>
+  <div class="row">
+    <div class="col-3">
+      <mat-form-field class="mat-form-field-fluid">
+        <input matInput formControlName="issuerName"
+          placeholder="Үнэт цаас гаргагчийн нэр" />
+      </mat-form-field>
+    </div>
+    <div class="col-3">
+      <mat-form-field class="mat-form-field-fluid">
+        <input matInput formControlName="securityName"
+          placeholder="Үнэт цаасны нэр" />
+      </mat-form-field>
+    </div>
+  </div>
+  <hr class="active">
+  <div class="d-flex">
+    <button mat-button color="primary" type="submit">
+      Save
+    </button>
+  </div>
+</form>
