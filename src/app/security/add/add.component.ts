@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
 import { Security } from '../store/security.model';
 
 @Component({
@@ -7,10 +8,9 @@ import { Security } from '../store/security.model';
   styleUrls: ['./add.component.scss']
 })
 export class AddComponent implements OnInit {
-  model: Partial<Security> = {
-
-  }
-  constructor() {
+  constructor(
+    private dialogRef: MatDialogRef<AddComponent>
+  ) {
   }
 
   ngOnInit(): void {

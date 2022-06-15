@@ -14,6 +14,9 @@ import { UiModule } from '../ui/ui.module';
 import { FormComponent } from './form/form.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AddComponent } from './add/add.component';
+import { EditComponent } from './edit/edit.component';
+import {NgxMaskModule, IConfig} from 'ngx-mask'
+export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
 
 
 const routes: Routes = [
@@ -44,9 +47,11 @@ const routes: Routes = [
     ListComponent,
     FilterComponent,
     FormComponent,
-    AddComponent
+    AddComponent,
+    EditComponent
   ],
   imports: [
+    NgxMaskModule.forRoot(options),
     CommonModule,
     HttpClientModule,
     UiModule,

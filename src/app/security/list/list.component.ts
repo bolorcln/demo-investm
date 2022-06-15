@@ -1,7 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { select, Store } from '@ngrx/store';
 import { Subject, takeUntil, throttle } from 'rxjs';
+import { AddComponent } from '../add/add.component';
+import { EditComponent } from '../edit/edit.component';
 import { requestSecurities } from '../store/security.actions';
 import { Security } from '../store/security.model';
 import { SecurityState } from '../store/security.reducer';
@@ -21,7 +24,8 @@ export class ListComponent implements OnInit, OnDestroy {
   private _onDestroy$: Subject<void> = new Subject();
 
   constructor(
-    private store$: Store<SecurityState>
+    private store$: Store<SecurityState>,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -39,4 +43,19 @@ export class ListComponent implements OnInit, OnDestroy {
     this._onDestroy$.next();
     this._onDestroy$.complete();
   }
+
+  addSecurity() {
+    this.dialog.open(AddComponent, {
+      width: '80vw'
+    })
+  }
+
+  editSecurity(security: Security) {
+    this.dialog.open(EditComponent, {
+      width: '80vw',
+      data: security
+    })
+  }
+
+  deleteSecurity(security: Security) {}
 }

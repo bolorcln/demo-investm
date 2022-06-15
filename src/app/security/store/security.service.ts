@@ -1,45 +1,131 @@
+import { CurrencyPipe } from "@angular/common";
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable, of } from "rxjs";
-import { Security } from "./security.model";
+import { map, Observable, of, tap } from "rxjs";
+import { FormOfInterest, InterestPaymentPeriod, InvestmentKind, InvestmentType, IssuerRating, IssuerType, ProductType, Security, SecurityName } from "./security.model";
+
 
 @Injectable()
 export class SecurityService {
-  securities: Security[];
+  private url = 'http://localhost:9002'
   constructor(
     private readonly http: HttpClient
-  ) {
-    this.securities = [
-      {
-        id: 1,
-        organizationId: 223102,
-        organizationName: 'Invescore',
-        securityName: 'Компанийн бонд',
-        issuerTypeId: 1,
-        issuerTypeName: 'ББСБ',
-        accountNo: 223334444,
-        investmentType: 'Тогтмол орлоготой үнэт цаас',
-        unitAccountValue: 100000,
-        startDate: new Date('06/04/2022'),
-        endDate: new Date('09/21/2022')
-      },
-      {
-        id: 2,
-        organizationId: 551616,
-        organizationName: 'Golomt Bank',
-        securityName: 'Байгууллагын хадгаламж',
-        issuerTypeId: 2,
-        issuerTypeName: 'Банк',
-        accountNo: 11222333,
-        investmentType: 'Тогтмол орлоготой үнэт цаас',
-        unitAccountValue: 1000000000,
-        startDate: new Date('06/04/2022'),
-        endDate: new Date('06/04/2022')
-      }
-    ]
+  ) {}
+
+  createSecurity(sec: any): Observable<Security> {
+    console.log(sec)
+    return this.http.post<Security>(`${this.url}/nav/securities`, sec);
   }
 
   getSecurities(): Observable<Security[]> {
-    return of(this.securities)
+    return this.http.get<any[]>(`${this.url}/nav/securities`).pipe(
+      tap(console.log),
+      map((data: any[]) => data.map((item: any) => ({
+        id: item.id,
+        productTypeId: item.product_type_id,
+        organizationId: 2222,
+        organizationName: item.issuer_of_security,
+        securityNameId: item.security_name_id,
+        securityName: item.security_name,
+        issuerTypeId: item.issuer_type_id,
+        issuerTypeName: item.issuer_type_name,
+        accountNo: item.account_no,
+        investmentKindId: item.investment_kind_id,
+        investmentTypeId: item.investment_type_id,
+        investmentType: item.investment_type_name,
+        unitAccountValue: item.unit_account_value,
+        startDate: item.start_date,
+        endDate: item.end_date,
+        issuerRatingId: item.issuer_rating_id,
+        issuerRatingName: item.issuer_rating_name,
+        currency: item.currency,
+        quantity: item.quantity,
+        brokerTradingFee: item.broker_trading_fee,
+        custodianTradingFee: item.custodian_trading_fee,
+        interestRate: Number(item.interest_rate * 100),
+        interestPaymentPeriodId: item.interest_payment_period_id,
+        formOfInterestId: item.form_of_interest_id
+      })))
+    )
+  }
+
+  getSecurityNames(): Observable<SecurityName[]> {
+    return this.http.get<any[]>(`${this.url}/nav/security-names`).pipe(
+      tap(console.log),
+      map(data => data.map((item: any) => ({
+        id: item.id,
+        name: item.name,
+      })))
+    )
+  }
+
+  getProductTypes(): Observable<ProductType[]> {
+    return this.http.get<any[]>(`${this.url}/nav/product-types`).pipe(
+      tap(console.log),
+      map(data => data.map((item: any) => ({
+        id: item.id,
+        name: item.name,
+      })))
+    )
+  }
+
+  getIssuerTypes(): Observable<IssuerType[]> {
+    return this.http.get<any[]>(`${this.url}/nav/issuer-types`).pipe(
+      tap(console.log),
+      map(data => data.map((item: any) => ({
+        id: item.id,
+        name: item.name,
+      })))
+    )
+  }
+
+  getInvestmentKinds(): Observable<InvestmentKind[]> {
+    return this.http.get<any[]>(`${this.url}/nav/investment-kinds`).pipe(
+      tap(console.log),
+      map(data => data.map((item: any) => ({
+        id: item.id,
+        name: item.name,
+      })))
+    )
+  }
+
+  getInvestmentTypes(): Observable<InvestmentType[]> {
+    return this.http.get<any[]>(`${this.url}/nav/investment-types`).pipe(
+      tap(console.log),
+      map(data => data.map((item: any) => ({
+        id: item.id,
+        name: item.name,
+      })))
+    )
+  }
+
+  getIssuerRatings(): Observable<IssuerRating[]> {
+    return this.http.get<any[]>(`${this.url}/nav/issuer-ratings`).pipe(
+      tap(console.log),
+      map(data => data.map((item: any) => ({
+        id: item.id,
+        name: item.name,
+      })))
+    )
+  }
+
+  getInterestPaymentPeriod(): Observable<InterestPaymentPeriod[]> {
+    return this.http.get<any[]>(`${this.url}/nav/interest-payment-periods`).pipe(
+      tap(console.log),
+      map(data => data.map((item: any) => ({
+        id: item.id,
+        name: item.name,
+      })))
+    )
+  }
+
+  getFormOfInterests(): Observable<FormOfInterest[]> {
+    return this.http.get<any[]>(`${this.url}/nav/form-of-interests`).pipe(
+      tap(console.log),
+      map(data => data.map((item: any) => ({
+        id: item.id,
+        name: item.name,
+      })))
+    )
   }
 }

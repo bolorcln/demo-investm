@@ -6,3 +6,11 @@ export const securitiesLoaded = createAction(
   '[Security Effect] Securities Loaded',
   props<{entities: Security[]}>()
 )
+export const addSecurity = createAction(
+  '[Security Form] Create Security',
+  props<{sec: any}>()
+)
+export const securityAdded = createAction(
+  '[Security Effect] Security Created',
+  props<{sec: Security}>()
+)

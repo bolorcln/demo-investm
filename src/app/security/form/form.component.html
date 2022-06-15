@@ -1,22 +1,171 @@
-<form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
-  <h3>Ерөнхий мэдээлэл</h3>
+<form *ngIf="formGroup" [formGroup]="formGroup" (ngSubmit)="onSubmit()">
   <div class="row">
-    <div class="col-3">
+    <div class="col-4">
       <mat-form-field class="mat-form-field-fluid">
+        <mat-select placeholder="Бүтээгдхүүн" formControlName="productType">
+          <mat-option *ngFor="let name of (productTypes$|async)" [value]="name.id">
+            {{name.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+  <h3 class="font-weight-bold">Ерөнхий мэдээлэл</h3>
+  <div class="row">
+    <div class="col-4">
+      <mat-form-field class="w-100">
         <input matInput formControlName="issuerName"
           placeholder="Үнэт цаас гаргагчийн нэр" />
       </mat-form-field>
     </div>
-    <div class="col-3">
-      <mat-form-field class="mat-form-field-fluid">
-        <input matInput formControlName="securityName"
-          placeholder="Үнэт цаасны нэр" />
+    <div class="col-4">
+      <mat-form-field class="w-100">
+        <mat-select placeholder="Үнэт цаасны нэр" formControlName="securityName">
+          <mat-option *ngFor="let name of securityNames$|async" [value]="name.id">
+            {{name.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-4">
+      <mat-form-field class="w-100">
+        <mat-select placeholder="Үнэт цаас гаргагчийн хэлбэр" formControlName="issuerType">
+          <mat-option *ngFor="let name of (issuerTypes$|async)" [value]="name.id">
+            {{name.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-4">
+      <mat-form-field class="w-100">
+        <input matInput formControlName="accountNo" placeholder="Дансны дугаар" type="text">
+      </mat-form-field>
+    </div>
+    <div class="col-4">
+      <mat-form-field class="w-100">
+        <mat-select placeholder="Хөрөнгө оруулалтын төрөл" formControlName="investmentKind">
+          <mat-option *ngFor="let name of (investmentKinds$|async)" [value]="name.id">
+            {{name.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-4">
+      <mat-form-field class="w-100">
+        <mat-select placeholder="Хөрөнгө оруулалтын хэлбэр" formControlName="investmentType">
+          <mat-option *ngFor="let name of (investmentTypes$|async)" [value]="name.id">
+            {{name.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-4">
+      <mat-form-field class="w-100">
+        <mat-select placeholder="Үнэт цаас гаргагчийн үнэлгээ" formControlName="issuerRating">
+          <mat-option *ngFor="let name of (issuerRatings$|async)" [value]="name.id">
+            {{name.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-4">
+      <mat-form-field class="w-100">
+        <mat-select placeholder="Валют" formControlName="currency">
+          <mat-option *ngFor="let name of currency" [value]="name">
+            {{name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-4"></div>
+  </div>
+  <hr class="active">
+  <h3 class="font-weight-bold">Хугацаа</h3>
+  <div class="row">
+    <div class="col-4">
+      <mat-form-field class="w-100">
+        <mat-label>Эхлэх хугацаа</mat-label>
+        <input matInput [matDatepicker]="start_picker" formControlName="start_date">
+        <mat-datepicker-toggle matSuffix [for]="start_picker"></mat-datepicker-toggle>
+        <mat-datepicker #start_picker></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div class="col-4">
+      <mat-form-field class="w-100">
+        <mat-label>Дуусах хугацаа</mat-label>
+        <input matInput [matDatepicker]="end_picker" formControlName="end_date">
+        <mat-datepicker-toggle matSuffix [for]="end_picker"></mat-datepicker-toggle>
+        <mat-datepicker #end_picker></mat-datepicker>
       </mat-form-field>
     </div>
   </div>
   <hr class="active">
-  <div class="d-flex">
-    <button mat-button color="primary" type="submit">
+  <h3 class="font-weight-bold">Хөрөнгө оруулалтын мэдээлэл</h3>
+  <div class="row">
+    <div class="col-4">
+      <mat-form-field class="w-100">
+        <input matInput type="text" mask="separator" thousandSeparator=","
+          formControlName="unitAccountValue"
+          placeholder="Нэгжийн дансны үнэ">
+      </mat-form-field>
+    </div>
+    <div class="col-4">
+      <mat-form-field class="w-100">
+        <input matInput type="text" mask="separator" thousandSeparator=","
+          formControlName="quantity"
+          placeholder="Тоо ширхэг">
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-4">
+      <mat-form-field class="w-100">
+        <input matInput type="text" mask="separator" thousandSeparator=","
+          formControlName="brokerTradingFee"
+          placeholder="Арилжааны шимтгэл (Брокер)">
+      </mat-form-field>
+    </div>
+    <div class="col-4">
+      <mat-form-field class="w-100">
+        <input matInput type="text" mask="separator" thousandSeparator=","
+          formControlName="custodianTradingFee"
+          placeholder="Арилжааны шимтгэл (кастодиан)">
+      </mat-form-field>
+    </div>
+  </div>
+  <hr class="active">
+  <h3 class="font-weight-bold">Хүүний мэдээлэл</h3>
+  <div class="row">
+    <div class="col-4">
+      <mat-form-field class="w-100">
+        <input matInput type="number" placeholder="Хүүгийн хэмжээ" formControlName="interestRate">
+      </mat-form-field>
+    </div>
+    <div class="col-4">
+      <mat-form-field class="w-100">
+        <mat-select placeholder="Хүү олгох хугацаа" formControlName="interestPaymentPeriod">
+          <mat-option *ngFor="let name of (interestPaymentPeriods$|async)" [value]="name.id">
+            {{name.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-4">
+      <mat-form-field class="w-100">
+        <mat-select placeholder="Хүү авах хэлбэр" formControlName="formOfInterest">
+          <mat-option *ngFor="let name of (formOfInterests$|async)" [value]="name.id">
+            {{name.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="d-flex justify-content-end">
+    <button mat-flat-button color="primary" type="submit">
       Save
     </button>
   </div>
